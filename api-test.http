@@ -1,0 +1,26 @@
+### Configuración de la URL base
+@baseUrl = http://localhost:8080
+
+### 1. Endpoint: GET /api/hello
+### Descripción: Obtiene un mensaje de bienvenida
+GET {{baseUrl}}/api/hello
+
+### 2. Endpoint: GET /api/health
+### Descripción: Verifica el estado de salud del sistema
+GET {{baseUrl}}/api/health
+
+### 3. Endpoint: GET /api/info
+### Descripción: Obtiene información de la aplicación y el sistema
+GET {{baseUrl}}/api/info
+
+### 4. Health Check: GET /health
+### Descripción: Health check estándar de Quarkus
+GET {{baseUrl}}/health
+
+### 5. Ready Check: GET /health/ready
+### Descripción: Verifica si la aplicación está lista para recibir requests
+GET {{baseUrl}}/health/ready
+
+### 6. Live Check: GET /health/live
+### Descripción: Verifica si la aplicación está funcionando
+GET {{baseUrl}}/health/live

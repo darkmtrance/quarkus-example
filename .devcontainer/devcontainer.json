@@ -1,0 +1,67 @@
+{
+  "name": "Quarkus Dev Environment",
+  "dockerComposeFile": "compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "redhat.java",
+        "vscjava.vscode-java-pack",
+        "vscjava.vscode-maven",
+        "redhat.vscode-quarkus",
+        "redhat.vscode-microprofile",
+        "redhat.vscode-yaml",
+        "ms-azuretools.vscode-docker",
+        "humao.rest-client"
+      ],
+      "settings": {
+        "java.configuration.updateBuildConfiguration": "automatic",
+        "java.server.launchMode": "Standard",
+        "quarkus.tools.starter.api.base": "https://code.quarkus.io",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.organizeImports": "explicit"
+        },
+        "[java]": {
+          "editor.defaultFormatter": "redhat.java"
+        }
+      }
+    }
+  },
+  "forwardPorts": [
+    8080
+  ],
+  "portsAttributes": {
+    "8080": {
+      "label": "🚀 Quarkus App",
+      "onAutoForward": "notify"
+    }
+  },
+  "remoteEnv": {
+    "JAVA_HOME": "/usr/lib/jvm/msopenjdk-current"
+  },
+  "remoteUser": "vscode",
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {
+      "installDirectlyFromGitHubRelease": true,
+      "version": "latest"
+    },
+    "ghcr.io/devcontainers-extra/features/quarkus-sdkman:2": {
+      "version": "latest",
+      "jdkVersion": "none",
+      "jdkDistro": "ms"
+    },
+    "ghcr.io/devcontainers/features/java:1": {
+      "installMaven": true,
+      "version": "none",
+      "jdkDistro": "ms",
+      "mavenVersion": "latest"
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest",
+      "moby": true,
+      "dockerDashComposeVersion": "v2"
+    }
+  }
+}

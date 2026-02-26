@@ -1,0 +1,49 @@
+## Stage 1: Build
+FROM dhi.io/maven:3-jdk21-alpine3.22-dev AS builder
+
+WORKDIR /build
+
+# Copiar archivos de configuración de Maven primero (para aprovechar caché)
+COPY pom.xml .
+
+# Descargar dependencias (se cachea si pom.xml no cambia)
+RUN mvn dependency:go-offline
+
+# Copiar código fuente
+COPY src src
+
+# Compilar aplicación
+RUN mvn clean package -DskipTests
+
+## Stage 2: Runtime
+FROM registry.access.redhat.com/ubi8/openjdk-21:latest
+
+ENV LANGUAGE='en_US:en'
+
+# Metadata
+LABEL maintainer="workshop@example.com" \
+  description="Quarkus Hello API for Azure Workshop" \
+  version="1.0.0"
+
+# Copiar el JAR compilado y sus dependencias
+COPY --from=builder --chown=185 /build/target/quarkus-app/lib/ /deployments/lib/
+COPY --from=builder --chown=185 /build/target/quarkus-app/*.jar /deployments/
+COPY --from=builder --chown=185 /build/target/quarkus-app/app/ /deployments/app/
+COPY --from=builder --chown=185 /build/target/quarkus-app/quarkus/ /deployments/quarkus/
+
+# Exponer puerto
+EXPOSE 8080
+
+# Usuario no privilegiado
+USER 185
+
+# Variables de entorno
+ENV JAVA_OPTS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
+ENV JAVA_APP_JAR="/deployments/quarkus-run.jar"
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:8080/health || exit 1
+
+# Punto de entrada
+ENTRYPOINT [ "java", "-jar", "/deployments/quarkus-run.jar" ]

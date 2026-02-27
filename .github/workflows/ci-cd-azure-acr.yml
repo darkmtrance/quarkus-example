@@ -12,6 +12,10 @@ env:
   IMAGE_NAME: quarkus-hello-api
   JAVA_VERSION: "21"
 
+permissions:
+  contents: read
+  checks: write
+
 jobs:
   build-and-test:
     name: 🔨 Build and Test

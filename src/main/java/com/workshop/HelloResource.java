@@ -19,10 +19,9 @@ public class HelloResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Message hello() {
         return new Message(
-            "¡Hola desde Quarkus!",
-            LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
-            "1.0.0"
-        );
+                "¡Hola Indra desde Quarkus!",
+                LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
+                "1.0.0");
     }
 
     @GET
@@ -30,10 +29,9 @@ public class HelloResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Message health() {
         return new Message(
-            "Sistema operativo",
-            LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
-            "1.0.0"
-        );
+                "Sistema operativo",
+                LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
+                "1.0.0");
     }
 
     @GET
@@ -41,11 +39,10 @@ public class HelloResource {
     @Produces(MediaType.APPLICATION_JSON)
     public InfoResponse info() {
         return new InfoResponse(
-            "quarkus-hello-api",
-            "1.0.0",
-            "Azure Container Registry Workshop",
-            System.getProperty("java.version"),
-            System.getProperty("os.name")
-        );
+                "quarkus-hello-api",
+                "1.0.0",
+                "Azure Container Registry Workshop",
+                System.getProperty("java.version"),
+                System.getProperty("os.name"));
     }
 }
